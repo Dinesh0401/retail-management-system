@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import healthRoutes from './routes/healthRoutes';
 import productRoutes from './routes/productRoutes';
 import branchRoutes from './routes/branchRoutes';
@@ -10,6 +11,11 @@ import inventoryIntelligenceRoutes from './routes/inventoryIntelligenceRoutes';
 import decisionImpactRoutes from './routes/decisionImpactRoutes';
 
 const app = express();
+
+// Configure CORS
+app.use(cors({
+  origin: "http://localhost:5173"
+}));
 
 // Parse incoming JSON request bodies
 app.use(express.json());

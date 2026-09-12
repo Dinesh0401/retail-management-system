@@ -1,8 +1,8 @@
-import Products from './pages/Products'
+import Dashboard from './pages/Dashboard'
 import './App.css'
 
 function App() {
-  return <Products />
+  return <Dashboard />
 }
 
 export default App
