@@ -1,10 +1,10 @@
 // Represents a sale transaction of a product at a branch
 export interface Sale {
   readonly id: string;
-  productId: string;
-  branchId: string;
+  product_id: string;
+  branch_id: string;
   quantity: number;
-  unitPrice: number;
-  totalAmount: number;
-  saleDate: string;
+  unit_price: number;
+  total_amount: number;
+  readonly sold_at: string;
 }
