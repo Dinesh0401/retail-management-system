@@ -12,8 +12,7 @@ export interface Product {
   name: string;
   sku: string;
   category: ProductCategory;
-  price: number;
-  unit: string;
-  description?: string;
-  readonly createdAt: string;
+  unit_price: number;
+  cost_price: number;
+  readonly created_at: string;
 }
