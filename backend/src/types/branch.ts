@@ -3,7 +3,6 @@ export interface Branch {
   readonly id: string;
   name: string;
   location: string;
-  contactNumber?: string;
-  isActive: boolean;
-  readonly createdAt: string;
+  manager_name: string | null;
+  readonly created_at: string;
 }
