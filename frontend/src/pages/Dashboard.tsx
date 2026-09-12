@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  PieChart, Pie, Cell
+} from 'recharts';
 import { api } from '../services/api';
 import type {
   Product,
@@ -96,6 +100,20 @@ function Dashboard() {
         <div className="dashboard-column">
           <section className="card">
             <h2>Top Selling Products</h2>
+            <div style={{ width: '100%', height: 250, marginBottom: '20px' }}>
+              <ResponsiveContainer>
+                <BarChart data={salesData.top_selling_products.map(p => ({
+                    name: productMap.get(p.product_id) || 'Unknown',
+                    revenue: p.total_amount
+                  }))} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis type="number" tickFormatter={(value: number) => `₹${value}`} />
+                  <YAxis dataKey="name" type="category" width={100} tick={{ fontSize: 12 }} />
+                  <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                  <Bar dataKey="revenue" fill="#8884d8" name="Revenue" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
             <table className="data-table">
               <thead>
                 <tr>
@@ -118,6 +136,20 @@ function Dashboard() {
 
           <section className="card">
             <h2>Sales by Branch</h2>
+            <div style={{ width: '100%', height: 250, marginBottom: '20px' }}>
+              <ResponsiveContainer>
+                <BarChart data={salesData.sales_by_branch.map(b => ({
+                    name: branchMap.get(b.branch_id) || 'Unknown',
+                    revenue: b.total_amount
+                  }))} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis tickFormatter={(value: number) => `₹${value}`} />
+                  <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                  <Bar dataKey="revenue" fill="#82ca9d" name="Revenue" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
             <table className="data-table">
               <thead>
                 <tr>
@@ -143,6 +175,33 @@ function Dashboard() {
         <div className="dashboard-column">
           <section className="card">
             <h2>Inventory Intelligence</h2>
+            <div style={{ width: '100%', height: 200, marginBottom: '10px' }}>
+              <ResponsiveContainer>
+                <PieChart>
+                  <Pie
+                    data={[
+                      { name: 'Healthy', value: inventoryData.healthy_stock_items, color: '#137333' },
+                      { name: 'Low Stock', value: inventoryData.low_stock_items, color: '#c5221f' }
+                    ]}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={50}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {[
+                      { name: 'Healthy', value: inventoryData.healthy_stock_items, color: '#137333' },
+                      { name: 'Low Stock', value: inventoryData.low_stock_items, color: '#c5221f' }
+                    ].map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
             <div className="inventory-summary">
               <div className="summary-item healthy">
                 <strong>Healthy:</strong> {inventoryData.healthy_stock_items}
