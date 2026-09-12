@@ -4,8 +4,12 @@
 
 body {
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f4f7f6;
+  color: #333;
 }
 
+/* Original Product Form Styles */
 .products-page {
   max-width: 700px;
   margin: 40px auto;
@@ -13,37 +17,206 @@ body {
   background: white;
   border-radius: 12px;
 }
-
-.products-page h1 {
-  margin-bottom: 25px;
+.products-page h1 { margin-bottom: 25px; }
+.product-form { display: flex; flex-direction: column; gap: 15px; }
+.product-form input, .product-form select, .product-form textarea {
+  padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px;
+}
+.product-form textarea { min-height: 100px; resize: vertical; }
+.product-form button {
+  padding: 12px; border: none; border-radius: 6px; background: #222; color: white; font-size: 16px; cursor: pointer;
 }
 
-.product-form {
+/* Dashboard Styles */
+.dashboard {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: #222;
+}
+
+.dashboard-header p {
+  color: #666;
+  margin-top: 5px;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.kpi-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.kpi-value {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #111;
+}
+
+.alert-kpi .kpi-value {
+  color: #d93025;
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.dashboard-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 18px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+  color: #666;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.inventory-summary {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.summary-item {
+  padding: 10px 15px;
+  border-radius: 6px;
+  flex: 1;
+  text-align: center;
+}
+
+.summary-item.healthy {
+  background: #e6f4ea;
+  color: #137333;
+}
+
+.summary-item.low-stock {
+  background: #fce8e6;
+  color: #c5221f;
+}
+
+.alert-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alert-item {
+  padding: 12px;
+  background: #fff8f8;
+  border-left: 4px solid #d93025;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.qty-badge {
+  display: block;
+  font-size: 12px;
+  color: #c5221f;
+  margin-top: 5px;
+}
+
+.decision-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.product-form input,
-.product-form select,
-.product-form textarea {
-  padding: 12px;
-  border: 1px solid #ccc;
+.decision-card {
+  border: 1px solid #eee;
   border-radius: 6px;
-  font-size: 16px;
+  padding: 15px;
+  background: #fafafa;
 }
 
-.product-form textarea {
-  min-height: 100px;
-  resize: vertical;
+.decision-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
-.product-form button {
-  padding: 12px;
-  border: none;
-  border-radius: 6px;
-  background: #222;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+.decision-type {
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #e8eaed;
+  color: #3c4043;
+}
+
+.decision-impact {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.impact-high .decision-impact { color: #d93025; }
+.impact-medium .decision-impact { color: #f29900; }
+.impact-low .decision-impact { color: #188038; }
+
+.decision-card h4 {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+}
+
+.decision-card p {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
 }
