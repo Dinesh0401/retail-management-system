@@ -45,6 +45,10 @@ export const api = {
   getBranches: () => fetchApi<Branch[]>('/branches'),
   getSales: () => fetchApi<Sale[]>('/sales'),
   getInventory: () => fetchApi<Inventory[]>('/inventory'),
+  updateInventory: (id: string, quantity: number, reorder_level: number) => fetchApi<Inventory>(`/inventory/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify({ quantity, reorder_level }),
+  }),
   getStockMovements: () => fetchApi<StockMovement[]>('/stock-movements'),
   getSalesAnalysis: () => fetchApi<SalesAnalysisData>('/sales-analysis'),
   getInventoryIntelligence: () => fetchApi<InventoryIntelligenceData>('/inventory-intelligence'),
