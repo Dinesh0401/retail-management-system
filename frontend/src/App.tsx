@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
+import Inventory from './pages/Inventory';
 import './App.css';
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
   };
 
   const isProducts = currentPath === '/products';
+  const isInventory = currentPath === '/inventory';
+  const isDashboard = !isProducts && !isInventory;
 
   return (
     <div className="app-layout">
@@ -43,17 +46,24 @@ function App() {
           <nav className="nav-menu">
             <button
               type="button"
-              className={`nav-tab ${!isProducts ? 'active' : ''}`}
+              className={`nav-tab ${isDashboard ? 'active' : ''}`}
               onClick={() => navigate('/')}
             >
-              📊 Intelligence Dashboard
+              📊 Dashboard
             </button>
             <button
               type="button"
               className={`nav-tab ${isProducts ? 'active' : ''}`}
               onClick={() => navigate('/products')}
             >
-              📦 Products (CRUD)
+              📦 Products
+            </button>
+            <button
+              type="button"
+              className={`nav-tab ${isInventory ? 'active' : ''}`}
+              onClick={() => navigate('/inventory')}
+            >
+              🏢 Inventory
             </button>
           </nav>
         </div>
@@ -63,6 +73,8 @@ function App() {
       <main className="app-viewport">
         {isProducts ? (
           <Products onNavigate={navigate} />
+        ) : isInventory ? (
+          <Inventory />
         ) : (
           <Dashboard onNavigate={navigate} />
         )}
