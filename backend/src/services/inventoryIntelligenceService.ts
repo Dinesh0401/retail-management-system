@@ -12,14 +12,21 @@ export const getInventoryIntelligence = async (): Promise<InventoryIntelligenceD
     const qty = Number(record.quantity) || 0;
     const reorder = Number(record.reorder_level) || 0;
 
-    const isLowStock = qty <= reorder;
-    const stock_status = isLowStock ? 'LOW_STOCK' : 'HEALTHY';
-    const reorder_recommended = isLowStock;
+    let stock_status: 'LOW_STOCK' | 'HEALTHY' | 'UNMONITORED';
+    let reorder_recommended = false;
 
-    if (isLowStock) {
-      low_stock_items++;
+    if (qty === 0 && reorder === 0) {
+      stock_status = 'UNMONITORED';
     } else {
-      healthy_stock_items++;
+      const isLowStock = qty <= reorder;
+      stock_status = isLowStock ? 'LOW_STOCK' : 'HEALTHY';
+      reorder_recommended = isLowStock;
+
+      if (isLowStock) {
+        low_stock_items++;
+      } else {
+        healthy_stock_items++;
+      }
     }
 
     items.push({

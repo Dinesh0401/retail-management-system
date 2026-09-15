@@ -40,7 +40,7 @@ export const createProduct = async (input: CreateProductInput): Promise<Product>
         product_id: product.id,
         branch_id: branch.id,
         quantity: 0,
-        reorder_level: 10
+        reorder_level: 0
       }));
       
       const { error: invError } = await supabase

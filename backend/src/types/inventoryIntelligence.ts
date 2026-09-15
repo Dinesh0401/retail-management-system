@@ -3,7 +3,7 @@ export interface InventoryIntelligenceItem {
   branch_id: string;
   quantity: number;
   reorder_level: number;
-  stock_status: 'LOW_STOCK' | 'HEALTHY';
+  stock_status: 'LOW_STOCK' | 'HEALTHY' | 'UNMONITORED';
   reorder_recommended: boolean;
 }
 

@@ -13,3 +13,18 @@ export const getInventory = async (): Promise<Inventory[]> => {
 
   return data as Inventory[];
 };
+
+export const updateInventory = async (id: string, quantity: number, reorder_level: number): Promise<Inventory> => {
+  const { data, error } = await supabase
+    .from('inventory')
+    .update({ quantity, reorder_level })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data as Inventory;
+};
