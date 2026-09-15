@@ -16,3 +16,9 @@ export interface Product {
   cost_price: number;
   readonly created_at: string;
 }
+
+// Input type for creating a new product
+export type CreateProductInput = Omit<Product, 'id' | 'created_at'>;
+
+// Input type for updating an existing product
+export type UpdateProductInput = Partial<CreateProductInput>;
