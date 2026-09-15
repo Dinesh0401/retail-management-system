@@ -14,7 +14,7 @@ export const getProductsHandler = async (req: Request, res: Response) => {
 
 export const getProductByIdHandler = async (req: Request, res: Response) => {
   try {
-    const product = await getProductById(req.params.id);
+    const product = await getProductById(req.params.id as string);
     if (!product) {
       return res.status(404).json({ success: false, error: 'Product not found' });
     }
@@ -61,7 +61,7 @@ export const updateProductHandler = async (req: Request, res: Response) => {
     if (cost_price !== undefined && cost_price <= 0) return res.status(400).json({ success: false, error: 'Cost price must be > 0' });
 
     // Check if product exists
-    const existing = await getProductById(id);
+    const existing = await getProductById(id as string);
     if (!existing) {
       return res.status(404).json({ success: false, error: 'Product not found' });
     }
@@ -71,7 +71,7 @@ export const updateProductHandler = async (req: Request, res: Response) => {
     // Clean undefined fields so they aren't sent to Supabase
     Object.keys(input).forEach(key => input[key as keyof UpdateProductInput] === undefined && delete input[key as keyof UpdateProductInput]);
 
-    const product = await updateProduct(id, input);
+    const product = await updateProduct(id as string, input);
     res.json({ success: true, data: product });
   } catch (error: any) {
     console.error('Error updating product:', error);
@@ -86,12 +86,12 @@ export const deleteProductHandler = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     
-    const existing = await getProductById(id);
+    const existing = await getProductById(id as string);
     if (!existing) {
       return res.status(404).json({ success: false, error: 'Product not found' });
     }
 
-    await deleteProduct(id);
+    await deleteProduct(id as string);
     res.json({ success: true, message: 'Product deleted successfully' });
   } catch (error: any) {
     console.error('Error deleting product:', error);

@@ -69,11 +69,16 @@ CREATE TABLE decisions (
 );
 
 -- ============================================
--- Disable Row Level Security (no auth in this mini project)
+-- Disable Row Level Security for other tables
 -- ============================================
 ALTER TABLE branches DISABLE ROW LEVEL SECURITY;
-ALTER TABLE products DISABLE ROW LEVEL SECURITY;
 ALTER TABLE sales DISABLE ROW LEVEL SECURITY;
 ALTER TABLE inventory DISABLE ROW LEVEL SECURITY;
 ALTER TABLE stock_movements DISABLE ROW LEVEL SECURITY;
 ALTER TABLE decisions DISABLE ROW LEVEL SECURITY;
+
+-- ============================================
+-- Enable Row Level Security on Products for CRUD API
+-- ============================================
+ALTER TABLE products ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow anonymous operations for API" ON products FOR ALL USING (true);
