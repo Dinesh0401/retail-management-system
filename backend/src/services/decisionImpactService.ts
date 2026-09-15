@@ -13,23 +13,27 @@ export const getDecisionImpact = async (): Promise<DecisionImpactData> => {
     if (item.stock_status === 'LOW_STOCK') {
       const estimated_impact = item.quantity === 0 ? 'HIGH' : 'MEDIUM';
       
-      // Calculate how much we need to get back to a healthy state
-      const neededAmount = item.reorder_level - item.quantity + 1;
+      // Calculate how much we need to reach the reorder level safely
+      // Adding 1 so it actually goes ABOVE the reorder level
+      const required = item.reorder_level - item.quantity + 1;
 
-      // Look for a branch with enough surplus to cover the needed amount
+      // Look for a branch with ANY surplus
       const surplusBranch = intelligence.items.find(other => 
         other.product_id === item.product_id && 
         other.branch_id !== item.branch_id && 
-        (other.quantity - other.reorder_level) >= neededAmount
+        (other.quantity - other.reorder_level) > 0
       );
 
       if (surplusBranch) {
+        const surplus = surplusBranch.quantity - surplusBranch.reorder_level;
+        const transferQuantity = Math.min(surplus, required);
+        
         const sourceBranchName = branchMap.get(surplusBranch.branch_id) || surplusBranch.branch_id;
         decisions.push({
           branch_id: item.branch_id,
           product_id: item.product_id,
           decision_type: 'TRANSFER',
-          description: `Transfer ${neededAmount} units from ${sourceBranchName} to restore healthy stock levels.`,
+          description: `Transfer ${transferQuantity} units from ${sourceBranchName} to restore healthy stock levels.`,
           impact: estimated_impact,
         });
       } else {

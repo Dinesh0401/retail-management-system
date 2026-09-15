@@ -29,7 +29,7 @@ export const updateInventoryHandler = async (req: Request, res: Response) => {
       });
     }
 
-    const inventory = await updateInventory(id, Number(quantity), Number(reorder_level));
+    const inventory = await updateInventory(id as string, Number(quantity), Number(reorder_level));
     res.json({
       success: true,
       data: inventory,
