@@ -1,6 +1,6 @@
-# SILKOS: Retail Intelligence & Inventory Decision System
+# Retail Intelligence & Inventory Decision System
 
-SILKOS is a multi-branch retail intelligence system designed to answer one critical business question:
+This is a multi-branch retail intelligence system designed to answer one critical business question:
 > **"A product is selling or stocking differently across branches. What should the business do?"**
 
 Rather than functioning simply as a billing system or e-commerce storefront, SILKOS intelligently monitors branch-wise inventory and generates actionable transfer or reorder decisions to optimize stock across locations.
