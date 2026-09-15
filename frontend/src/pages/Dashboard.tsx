@@ -12,7 +12,11 @@ import type {
   DecisionImpactData
 } from '../types/api';
 
-function Dashboard() {
+interface DashboardProps {
+  onNavigate?: (path: string) => void;
+}
+
+function Dashboard({ onNavigate }: DashboardProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -71,8 +75,18 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <h1>Retail Intelligence Dashboard</h1>
-        <p>Real-time insights and automated decisions</p>
+        <div className="dashboard-header-text">
+          <h1>Retail Intelligence Dashboard</h1>
+          <p>Real-time insights and automated decisions</p>
+        </div>
+        <button
+          type="button"
+          className="dashboard-action-btn"
+          onClick={() => onNavigate ? onNavigate('/products') : (window.location.pathname = '/products')}
+          title="Open Products CRUD Management"
+        >
+          <span className="btn-icon">📦</span> Manage Products (CRUD) →
+        </button>
       </header>
 
       {/* KPI Cards */}
