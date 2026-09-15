@@ -1,14 +1,26 @@
-# Retail Intelligence & Stock Management Dashboard
+# SILKOS: Retail Intelligence & Inventory Decision System
 
-A modern, full-stack dashboard for tracking retail sales, monitoring inventory health, and generating automated reorder decisions.
+SILKOS is a multi-branch retail intelligence system designed to answer one critical business question:
+> **"A product is selling or stocking differently across branches. What should the business do?"**
 
-## Features
-- **Product Management (CRUD)**: Create, read, update, and delete products.
-- **Branch Management**: View retail branches and locations.
-- **Sales Analysis**: Track total revenue, units sold, and top-performing products.
-- **Inventory Intelligence**: Automatically flag low-stock items.
-- **Stock Movement Tracking**: Monitor stock changes.
-- **Automated Reorder Decisions**: System-generated alerts based on stock health.
+Rather than functioning simply as a billing system or e-commerce storefront, SILKOS intelligently monitors branch-wise inventory and generates actionable transfer or reorder decisions to optimize stock across locations.
+
+## The Business Flow
+
+SILKOS operates on four core pillars:
+
+1. **Products (What we sell)**: A complete CRUD interface to manage the retail catalog (e.g., LED Desk Lamps, Silk Sarees).
+2. **Branches (Where we sell it)**: Represents the physical retail locations (e.g., Chennai, Salem, Coimbatore).
+3. **Inventory (How much we have)**: Managers assign stock levels and reorder thresholds for specific products at specific branches.
+4. **Decision Engine (The Brain)**: A deterministic TypeScript rules-engine that evaluates stock health and intelligently routes inventory.
+
+## The Intelligence Engine
+
+When an item's stock drops below its reorder threshold at a specific branch, SILKOS doesn't just blindly suggest ordering more. It checks the broader ecosystem:
+
+- **TRANSFER RECOMMENDED**: If Chennai is low on LED Lamps, but Salem has a surplus, the system recommends transferring the excess stock from Salem to Chennai.
+- **REORDER REQUIRED**: If all branches are running low, the system recommends a standard supplier reorder.
+- **UNMONITORED**: Newly created products default to 0 stock and 0 reorder level. The system intelligently ignores these until a manager actively assigns inventory targets, preventing artificial low-stock alerts.
 
 ## Tech Stack
 - **Frontend**: React, TypeScript, Recharts, Vite
@@ -16,17 +28,12 @@ A modern, full-stack dashboard for tracking retail sales, monitoring inventory h
 - **Database**: Supabase PostgreSQL
 - **Testing**: Jest, Supertest
 
-## Architecture
-```text
-React → REST API (Express) → Controllers → Services → Supabase PostgreSQL
-```
-
 ## Getting Started
 
 ### 1. Database Setup
 1. Create a Supabase project.
-2. Apply the schema found in `database/schema.sql`. This will create the necessary tables and enable Row Level Security (RLS) with appropriate public API policies.
-3. (Optional) Run `database/seed.sql` to populate the database with mock data.
+2. Apply the schema found in `database/schema.sql` to create tables and enable RLS.
+3. Run `database/seed.sql` to populate initial branches and products.
 
 ### 2. Backend Setup
 ```bash
@@ -42,7 +49,6 @@ Run the development server:
 ```bash
 npm run dev
 ```
-*Runs on http://localhost:5000*
 
 ### 3. Frontend Setup
 ```bash
@@ -52,33 +58,9 @@ npm run dev
 ```
 *Runs on http://localhost:5173*
 
-## Running Tests
-The backend API features a comprehensive test suite using Jest and Supertest.
+## Testing the Engine
+The backend features a comprehensive test suite covering the decision engine's logic (Transfers, Reorders, Unmonitored states) and Product CRUD operations.
 ```bash
 cd backend
-npm run test
+npm test
 ```
-
-## API Endpoints (Products)
-
-### `GET /api/products`
-Retrieves a list of all products.
-
-### `POST /api/products`
-Creates a new product.
-**Payload:**
-```json
-{
-  "name": "Wireless Mouse",
-  "sku": "WM-01",
-  "category": "electronics",
-  "unit_price": 25.99,
-  "cost_price": 12.00
-}
-```
-
-### `PUT /api/products/:id`
-Updates an existing product by ID.
-
-### `DELETE /api/products/:id`
-Deletes a product by ID.
